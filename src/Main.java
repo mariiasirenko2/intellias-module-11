@@ -62,15 +62,15 @@ public class Main {
     }
 
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
-        List<T> tmp = new ArrayList<>(first.toList());
-        AtomicInteger counter = new AtomicInteger();
+        List<T> secondStream = new ArrayList<>(first.toList());
+        AtomicInteger iterator = new AtomicInteger();
 
-        List<T> l = second.collect(ArrayList::new, (l1, t) -> {
+        List<T> mergedStreams = second.collect(ArrayList::new, (l1, t) -> {
                     l1.add(t);
-                    l1.add(counter.get() * 2, tmp.get(counter.getAndIncrement()));
+                    l1.add(iterator.get() * 2, secondStream.get(iterator.getAndIncrement()));
                 },
                 ArrayList::addAll);
 
-        return l.stream();
+        return mergedStreams.stream();
     }
 }
