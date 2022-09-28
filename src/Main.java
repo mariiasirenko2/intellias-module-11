@@ -45,8 +45,8 @@ public class Main {
         long m = (long) Math.pow(2, 48);
         long seed = 2;
 
-        Stream<Long> infiniteStream = Stream.iterate(seed, x -> (a * x + c) % m);
-        System.out.println("Task 4: Stream of 10 elements (with seed 1): " + infiniteStream.limit(10).toList());
+        Stream<Long> infiniteStream = generateInfiniteStream(seed, a, c, m);
+        System.out.println("Task 4: Stream of 10 elements : " + infiniteStream.limit(10).toList());
 
 
         //Task5
@@ -59,6 +59,10 @@ public class Main {
 
 
         System.out.println("Merged lists: " + zip(list1.stream(), list2.stream()).toList());
+    }
+    
+    public static Stream<Long> generateInfiniteStream(long seed, long a, long c, long m) {
+        return Stream.iterate(seed, x -> (a * x + c) % m);
     }
 
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
